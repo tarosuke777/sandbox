@@ -1,7 +1,7 @@
 name: Reviewdog
 
 permissions:
-  contents: write
+  contents: read
 
 on:
   pull_request:
@@ -35,7 +35,7 @@ jobs:
           CI_REPO_OWNER: ${{ github.repository_owner }}
           CI_REPO_NAME: ${{ github.event.repository.name }}
           CI_BRANCH: ${{ github.head_ref }}
-          REVIEWDOG_GITHUB_API_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+          REVIEWDOG_GITHUB_API_TOKEN : ${{ secrets.REVIEWDOG_TOKEN }}
         run: |
           kotlinc -script ./reviewdog/Main.kts
           cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%m" -reporter=github-pr-review
