@@ -14,7 +14,7 @@ fun main() {
             file.readLines().forEachIndexed { index, line ->
                 // 特定のキーワードが含まれている行を出力します
                 if (line.contains(keyword)) {
-                    report.appendText("${file.path}:${index + 1}:1:e: :warning:	:warning: :warning: :warning: TODO found \n    two line\n    three line\n")
+                    report.appendText("${file.path}:${index + 1}:1:e: :warning: :warning: :warning: :warning: TODO found \n    two line\n    three line\n")
                 }
             }
         }
