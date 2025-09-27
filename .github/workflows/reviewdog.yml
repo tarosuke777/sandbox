@@ -42,3 +42,22 @@ jobs:
           kotlinc -script ./reviewdog/Main.kts
           cat ./result.txt
           cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%t:%m" -reporter=github-pr-review
+      - name: Add a custom comment using GitHub CLI
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          # GitHub CLI を認証するためにトークンを環境変数にセット
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 複数行のメッセージを変数に格納
+          MESSAGE="## :memo: 最終チェックリスト
+          
+          - [ ] 命名規則は守られています
+          - [ ] テストが追加されています
+          
+          上記を確認後、マージを許可します。"
+
+          # gh pr comment コマンドでPRにコメントを投稿
+          # -b: body (メッセージ内容)
+          # $PR_NUMBER は PRの番号
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          gh pr comment $PR_NUMBER -b "$MESSAGE"
