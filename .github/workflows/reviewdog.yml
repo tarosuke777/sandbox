@@ -37,5 +37,6 @@ jobs:
           CI_BRANCH: ${{ github.head_ref }}
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_TOKEN }}
         run: |
+          ls
           kotlinc -script ./reviewdog/Main.kts
           cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%m" -reporter=github-pr-review
