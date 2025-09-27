@@ -1,0 +1,41 @@
+name: Reviewdog
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches:
+      - main # プルリクエストのマージ対象がmainの場合実施されます。
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: setup reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+      - name: set up jdk 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: run reviewdog
+        env:
+          CI_PULL_REQUEST: ${{ github.event.pull_request.number }}
+          CI_COMMIT: ${{ github.sha }}
+          CI_REPO_OWNER: ${{ github.repository_owner }}
+          CI_REPO_NAME: ${{ github.event.repository.name }}
+          CI_BRANCH: ${{ github.head_ref }}
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_TOKEN }}
+        run: |
+          kotlinc -script ./reviewdog/Main.kts
+          cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%m" -reporter=github-pr-review
