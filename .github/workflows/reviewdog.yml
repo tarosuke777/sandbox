@@ -1,7 +1,7 @@
 name: Reviewdog
 
 permissions:
-  contents: read
+  contents: write
 
 on:
   pull_request:
