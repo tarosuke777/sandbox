@@ -35,7 +35,7 @@ jobs:
           CI_REPO_OWNER: ${{ github.repository_owner }}
           CI_REPO_NAME: ${{ github.event.repository.name }}
           CI_BRANCH: ${{ github.head_ref }}
-          REVIEWDOG_GITHUB_API_TOKEN : ${{ secrets.REVIEWDOG_TOKEN }}
+          REVIEWDOG_GITHUB_API_TOKEN : ${{ secrets.GITHUB_TOKEN }}
         run: |
           pwd
           kotlinc -script ./reviewdog/Main.kts
