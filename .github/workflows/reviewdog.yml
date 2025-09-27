@@ -6,7 +6,7 @@ permissions:
 on:
   pull_request:
     branches:
-      - main # プルリクエストのマージ対象がmainの場合実施されます。
+      - develop # プルリクエストのマージ対象がmainの場合実施されます。
 
 jobs:
   review:
