@@ -41,4 +41,4 @@ jobs:
           pwd
           kotlinc -script ./reviewdog/Main.kts
           cat ./result.txt
-          cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%t:%m%C" -reporter=github-pr-review
+          cat ./result.txt | reviewdog -name="test" -efm="%f:%l:%c:%t:%m" -reporter=github-pr-review
